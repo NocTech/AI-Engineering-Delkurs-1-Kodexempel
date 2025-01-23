@@ -25,7 +25,7 @@ Vecka 1/
    Många kodexempel använder sig av Node.js och npm. Om du inte redan har det installerat, följ guiden [här](https://nodejs.org/en/download).
 
 2. **Navigera till rätt mapp:**
-   För att köra ett kodexempel, öppna terminalen och navigera till den specifika veckomappen och undermappen (`föreläsning` eller `klassrum`) där koden finns.
+   För att köra ett kodexempel, öppna terminalen och navigera till den specifika veckomappen och undermappen (`Förinspelad föreläsning` eller `Klassrum`) där koden finns.
 
    ```bash
    cd Vecka X/Förinspelad föreläsning
