@@ -28,7 +28,7 @@ Vecka 1/
    För att köra ett kodexempel, öppna terminalen och navigera till den specifika veckomappen och undermappen (`föreläsning` eller `klassrum`) där koden finns.
 
    ```bash
-   cd Vecka X/Förberedande föreläsning
+   cd Vecka X/Förinspelad föreläsning
    ```
 
 3. **Installera beroenden:**
