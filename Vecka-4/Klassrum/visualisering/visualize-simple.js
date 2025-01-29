@@ -1,5 +1,5 @@
 // Ladda in ert dataset som ni vill jobba med (byt ut iris.json)
-fetch("./housing.json")
+fetch("./iris.json")
 	.then((response) => response.json())
 	.then(async (irisData) => {
 		await runVisualization(irisData);
@@ -8,12 +8,33 @@ fetch("./housing.json")
 async function runVisualization(data) {
 	tfvis.visor().open();
 	// Anropa funktioner som visar er data
-	//await showScatterPlot(data);
+	await showScatterPlot(data);
 	await showHistogram(data);
+	await showGeminiScatterPlot(data);
+}
+
+async function showGeminiScatterPlot(data) {
+	const series = ["SepalLengthCm", "SepalWidthCm"]; // Välj de variabler du vill jämföra
+	const values = data.map((d) => ({
+		x: parseFloat(d[series[0]]),
+		y: parseFloat(d[series[1]]),
+	}));
+
+	const surface = tfvis
+		.visor()
+		.surface({ name: "Sepal Length vs Sepal Width", tab: "Charts" });
+	tfvis.render.scatterplot(
+		surface,
+		{ values },
+		{
+			xLabel: series[0],
+			yLabel: series[1],
+		}
+	);
 }
 
 async function showHistogram(data) {
-	const featureName = "median_income";
+	const featureName = "SepalLengthCm";
 	const values = data.map((row) => parseFloat(row[featureName]));
 	tfvis.render.histogram({ name: `${featureName} distribution` }, values, {
 		xLabel: featureName,
