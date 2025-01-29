@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Training a model to predict housing prices</title>
+		<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+		<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-vis@1.5.1/dist/tfjs-vis.umd.min.js"></script>
+	</head>
+	<body>
+		<h1>Look in the console to see the results</h1>
+		<!-- <script src="load-data.js"></script>
+		<script src="missing-values.js"></script>
+		<script src="scaling.js"></script>
+		<script src="dataconversion.js"></script>
+		<script src="model.js"></script>
+		<script>
+			//[{"Stad":"Malmö","Husstorlek_kvm":235.0,"Antal_Sovrum":5.0,"Antal_Badrum":1.0,"Husets_Ålder_År":66.0,"Pris_SEK":4885536}
+			loadDataset((dataset) => {
+				console.log("Original dataset is: ", dataset);
+				//const cleanedDataset = removeAllRowsWithMissingValues(dataset);
+				const cleanedDataset = imputeMean(dataset);
+				//console.log("Imputed dataset is: ", cleanedDataset);
+				let normalizedData;
+				normalizedData = normalizeData(cleanedDataset, "Husstorlek_kvm");
+				normalizedData = normalizeData(normalizedData, "Antal_Sovrum");
+				normalizedData = normalizeData(normalizedData, "Antal_Badrum");
+				normalizedData = normalizeData(normalizedData, "Husets_Ålder_År");
+				//console.log("normalizedData: ", normalizedData);
+
+				finalData = oneHotEncode(normalizedData, "Stad");
+
+				console.log("Final dataset is: ", finalData);
+
+				initModel(dataset);
+			});
+		</script> -->
+		<script src="visualize.js"></script>
+	</body>
+</html>
