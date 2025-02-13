@@ -37,6 +37,7 @@ Constructor:
 Methods:
 - add(number): Adds the given number to the result.
 - subtract(number): Subtracts the given number from the result.
+- multiply(number): Multiplies the given number with the result.
 - clear(): Resets the result to 0.
 
 */
