@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI API Demo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>AI API Demo</h1>
+        <div class="button-container">
+            <button onclick="callHuggingFace()">Call HuggingFace</button>
+            <button onclick="callOpenAI()">Call OpenAI</button>
+            <button onclick="callGemini()">Call Gemini</button>
+        </div>
+        <div class="response-container">
+            <h2>Response:</h2>
+            <pre id="response">Results will appear here...</pre>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
