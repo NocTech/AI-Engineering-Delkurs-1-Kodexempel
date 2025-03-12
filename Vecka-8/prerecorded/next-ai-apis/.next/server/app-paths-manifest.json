@@ -1,0 +1,6 @@
+{
+  "/api/huggingface/route": "app/api/huggingface/route.js",
+  "/page": "app/page.js",
+  "/api/openai/route": "app/api/openai/route.js",
+  "/api/gemini/route": "app/api/gemini/route.js"
+}
