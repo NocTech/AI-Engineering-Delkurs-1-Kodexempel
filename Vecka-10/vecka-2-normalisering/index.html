@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Data Normalization Demo</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				max-width: 800px;
+				margin: 20px auto;
+				padding: 0 20px;
+			}
+			button {
+				padding: 10px 20px;
+				font-size: 16px;
+				cursor: pointer;
+			}
+			#result {
+				margin-top: 20px;
+				padding: 10px;
+				background-color: #f5f5f5;
+				border-radius: 4px;
+			}
+		</style>
+		<script src="scaling.js"></script>
+	</head>
+	<body>
+		<h1>Data Normalization Demo</h1>
+		<button onclick="runNormalization()">Normalize Sample Data</button>
+		<pre id="result"></pre>
+
+		<script>
+			function runNormalization() {
+				// Sample data with house prices
+				const sampleData = [
+					{ price: 1500000, sqm: 26 },
+					{ price: 2500000, sqm: 55 },
+					{ price: 800000, sqm: 15 },
+					{ price: 3200000, sqm: 80 },
+					{ price: 1200000, sqm: 45 },
+				];
+
+				const normalizedData = normalizeData(sampleData, "price");
+				const normalizedSqmData = normalizeData(sampleData, "sqm");
+
+				console.log("normalizedData: ", normalizedData);
+				console.log("normalizedSqmData: ", normalizedSqmData);
+
+				// Display both original and normalized data
+				const resultElement = document.getElementById("result");
+				resultElement.textContent =
+					"Original Data:\n" +
+					JSON.stringify(sampleData, null, 2) +
+					"\n\nNormalized Data:\n" +
+					JSON.stringify(normalizedData, null, 2);
+			}
+		</script>
+	</body>
+</html>

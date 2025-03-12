@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>TensorFlow.js Neural Network</title>
+		<!-- Load TensorFlow.js -->
+		<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				max-width: 1000px;
+				margin: 0 auto;
+				padding: 20px;
+			}
+			button {
+				padding: 10px 15px;
+				font-size: 16px;
+				cursor: pointer;
+				background-color: #4CAF50;
+				color: white;
+				border: none;
+				border-radius: 4px;
+				margin: 10px 0;
+			}
+			.color-test {
+				margin-top: 20px;
+				display: none;
+			}
+			.color-preview {
+				width: 100px;
+				height: 100px;
+				border: 1px solid #ccc;
+				margin: 10px 0;
+			}
+			input {
+				width: 60px;
+				margin-right: 10px;
+			}
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				margin: 20px 0;
+			}
+			th, td {
+				border: 1px solid #ddd;
+				padding: 8px;
+				text-align: left;
+			}
+			th {
+				background-color: #f5f5f5;
+			}
+			tr:nth-child(even) {
+				background-color: #f9f9f9;
+			}
+			.test-results {
+				margin-top: 30px;
+				padding: 20px;
+				background-color: #f8f9fa;
+				border-radius: 8px;
+				display: none;
+			}
+			.section {
+				margin-bottom: 30px;
+				padding: 20px;
+				border: 1px solid #ddd;
+				border-radius: 8px;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>TensorFlow.js Neural Network Example</h1>
+		<p>This example trains a neural network to recognize color patterns using TensorFlow.js with an 80/20 train/test split.</p>
+		
+		<div class="section">
+			<h2>Training</h2>
+			<button id="trainButton" onclick="startLearning()">Train the Model</button>
+			<div id="trainingStatus"></div>
+		</div>
+		
+		<div id="testResults" class="test-results section">
+			<h2>Model Evaluation</h2>
+			<div id="testResultsContent"></div>
+			<div id="testResultsDetails"></div>
+		</div>
+		
+		<div id="colorTest" class="color-test section">
+			<h2>Interactive Testing</h2>
+			<p>Enter RGB values to classify a color:</p>
+			
+			<div>
+				R: <input type="number" id="rValue" min="0" max="255" value="128">
+				G: <input type="number" id="gValue" min="0" max="255" value="0">
+				B: <input type="number" id="bValue" min="0" max="255" value="128">
+				<button onclick="testColor()">Classify Color</button>
+			</div>
+			
+			<div class="color-preview" id="colorPreview"></div>
+			<div id="result"></div>
+		</div>
+		
+		<script src="demo-tensorflow.js"></script>
+		<script>
+			// Update the training status
+			tf.setBackend('webgl'); // Use WebGL for better performance if available
+			
+			// Show the color test section after training
+			function finishedTrainingUI() {
+				document.getElementById('colorTest').style.display = 'block';
+				document.getElementById('testResults').style.display = 'block';
+				document.getElementById('trainButton').disabled = false;
+				document.getElementById('trainingStatus').innerHTML = '<p>Training complete! Model evaluation and testing interface are now available.</p>';
+			}
+			
+			// Override the finishedTraining function to update UI
+			const originalFinishedTraining = finishedTraining;
+			finishedTraining = function() {
+				originalFinishedTraining();
+				finishedTrainingUI();
+			};
+			
+			// Test a color from the UI
+			function testColor() {
+				const r = parseInt(document.getElementById('rValue').value);
+				const g = parseInt(document.getElementById('gValue').value);
+				const b = parseInt(document.getElementById('bValue').value);
+				
+				// Update color preview
+				document.getElementById('colorPreview').style.backgroundColor = `rgb(${r},${g},${b})`;
+				
+				// Clear previous results
+				document.getElementById('result').innerHTML = '<p>Classifying...</p>';
+				
+				// Classify the color
+				const inputColor = tf.tensor2d([[r/255, g/255, b/255]]);
+				const prediction = model.predict(inputColor);
+				
+				prediction.data().then(data => {
+					const classes = ["red-ish", "green-ish", "blue-ish"];
+					const maxIndex = data.indexOf(Math.max(...data));
+					const predictedClass = classes[maxIndex];
+					const confidence = data[maxIndex];
+					
+					let resultHTML = `<p>Prediction: <strong>${predictedClass}</strong> with confidence ${(confidence * 100).toFixed(2)}%</p>`;
+					resultHTML += '<p>Full results:</p><ul>';
+					classes.forEach((cls, i) => {
+						resultHTML += `<li>${cls}: ${(data[i] * 100).toFixed(2)}%</li>`;
+					});
+					resultHTML += '</ul>';
+					
+					document.getElementById('result').innerHTML = resultHTML;
+				});
+			}
+			
+			// Update UI when training starts
+			const originalStartLearning = startLearning;
+			startLearning = function() {
+				document.getElementById('trainButton').disabled = true;
+				document.getElementById('trainingStatus').innerHTML = '<p>Training in progress... Check the console for details.</p>';
+				document.getElementById('testResults').style.display = 'none';
+				document.getElementById('colorTest').style.display = 'none';
+				originalStartLearning();
+			};
+		</script>
+	</body>
+</html> 
